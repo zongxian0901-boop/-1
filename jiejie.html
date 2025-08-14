@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>姐姐生日快乐！</title>
+    <style>
+        /* 基础样式 */
+        body {
+            font-family: 'Microsoft YaHei', '微软雅黑', sans-serif;
+            background: linear-gradient(135deg, #fff5f5 0%, #fff0f5 100%);
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            color: #d23369;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        h1 {
+            font-size: 2.2em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            background: linear-gradient(to right, #ff6b8b, #ff8e53);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: titleGlow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes titleGlow {
+            from { text-shadow: 0 0 5px rgba(255,107,139,0.3); }
+            to { text-shadow: 0 0 15px rgba(255,107,139,0.6); }
+        }
+        
+        /* 生日卡片样式 */
+        .birthday-card {
+            background-color: rgba(255,255,255,0.9);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(210, 51, 105, 0.2);
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .birthday-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(210, 51, 105, 0.3);
+        }
+        
+        .birthday-card:before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,154,158,0.1) 0%, rgba(255,154,158,0) 70%);
+            animation: pulse 8s linear infinite;
+            z-index: -1;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 0.2; }
+            100% { transform: scale(0.8); opacity: 0.5; }
+        }
+        
+        /* 照片框样式 */
+        .photo-frame {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            border: 5px solid #fff;
+            margin: 15px auto;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            position: relative;
+            transition: transform 0.3s;
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+        }
+        
+        .photo-frame:hover {
+            transform: rotate(5deg) scale(1.05);
+        }
+        
+        .photo-frame:before {
+            content: "";
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4, #a18cd1);
+            z-index: -1;
+            animation: rotateBorder 4s linear infinite;
+        }
+        
+        @keyframes rotateBorder {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .photo-frame:hover img {
+            transform: scale(1.1);
+        }
+        
+        /* 文字内容样式 */
+        .message {
+            font-size: 1.1em;
+            line-height: 1.8;
+            margin: 20px 0;
+            text-align: center;
+            padding: 0 10px;
+            position: relative;
+        }
+        
+        .message p {
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .message p:after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #ff9a9e, transparent);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+        
+        .message p:hover:after {
+            transform: scaleX(1);
+        }
+        
+        /* 按钮样式 */
+        .button {
+            background: linear-gradient(45deg, #ff6b8b, #ff8e53);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 20px 0;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(255,107,139,0.4);
+            position: relative;
+            overflow: hidden;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        
+        .button:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255,107,139,0.6);
+        }
+        
+        .button:hover:before {
+            left: 100%;
+        }
+        
+        /* 隐藏信息样式 */
+        .hidden-message {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: rgba(255,255,255,0.8);
+            border-radius: 15px;
+            animation: fadeIn 1s;
+            border-left: 5px solid #ff6b8b;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 装饰元素 */
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            color: #ff6b8b;
+            animation: float 4s ease-in-out infinite;
+            opacity: 0.7;
+        }
+        
+        .star {
+            position: absolute;
+            font-size: 15px;
+            color: #ffd700;
+            animation: spin 3s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* 气球样式 */
+        .balloon {
+            position: absolute;
+            width: 45px;
+            height: 55px;
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+            z-index: -1;
+        }
+        
+        .balloon:before {
+            content: "";
+            position: absolute;
+            width: 2px;
+            height: 60px;
+            background-color: rgba(0,0,0,0.2);
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .photo-frame {
+                width: 130px;
+                height: 130px;
+            }
+            
+            .message {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 装饰元素 -->
+        <div class="heart" style="top: 10%; left: 5%;">❤</div>
+        <div class="heart" style="top: 15%; right: 8%; animation-delay: 0.5s;">❤</div>
+        <div class="heart" style="bottom: 20%; left: 10%; animation-delay: 1s;">❤</div>
+        <div class="heart" style="bottom: 15%; right: 5%; animation-delay: 1.5s;">❤</div>
+        
+        <div class="star" style="top: 25%; left: 15%;">★</div>
+        <div class="star" style="top: 30%; right: 20%; animation-delay: 0.3s;">★</div>
+        
+        <!-- 气球 -->
+        <div class="balloon" style="left: 10%; top: 5%; background-color: #ff6b8b; animation-delay: 0s;"></div>
+        <div class="balloon" style="left: 20%; top: 15%; background-color: #a18cd1; animation-delay: 1s;"></div>
+        <div class="balloon" style="right: 15%; top: 10%; background-color: #ffd166; animation-delay: 1.5s;"></div>
+        <div class="balloon" style="right: 25%; top: 20%; background-color: #06d6a0; animation-delay: 0.7s;"></div>
+        
+        <h1>🎉 姐姐生日快乐！ 🎂</h1>
+        
+        <div class="birthday-card">
+            <h2>亲爱的姐姐：</h2>
+            
+            <div class="photo-frame">
+                <!-- 替换为你姐姐的照片 -->
+                <img src="jiejie.JPG" alt="陈佳慧">
+            </div>
+            
+            <div class="message">
+                <p>今天是你的特别日子，我想对全世界宣布：</p>
+                <p>我有一个最棒的姐姐！</p>
+                <p>感谢你一直以来的照顾和陪伴，</p>
+                <p>愿你的每一天都像今天一样充满欢笑！</p>
+            </div>
+            
+            <button class="button" id="surpriseBtn">点击查看特别惊喜！</button>
+            
+            <div class="hidden-message" id="specialMessage">
+                <h3 style="color: #ff6b8b;">给最爱的姐姐：</h3>
+                <p>你总是让着我，保护着我们，</p>
+                <p>现在我想告诉你，我真的很感激有你这样的姐姐。</p>
+                <p>希望新的一岁，所有的梦想都能实现，</p>
+                <p>所有的美好都与你相伴！</p>
+                <p style="font-weight: bold; margin-top: 20px;">永远爱你的弟弟 ❤</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('surpriseBtn').addEventListener('click', function() {
+            // 显示隐藏信息
+            document.getElementById('specialMessage').style.display = 'block';
+            
+            // 创建心形动画
+            createHearts();
+            
+            // 播放生日歌 (取消注释如果需要声音)
+            // var audio = new Audio('happy-birthday.mp3');
+            // audio.play();
+            
+            // 禁用按钮防止重复点击
+            this.disabled = true;
+            this.textContent = '惊喜已送达！';
+        });
+        
+        function createHearts() {
+            const colors = ['#ff6b8b', '#ff8e53', '#a18cd1', '#06d6a0', '#ffd166'];
+            
+            for (let i = 0; i < 30; i++) {
+                const heart = document.createElement('div');
+                heart.innerHTML = '❤';
+                heart.style.position = 'fixed';
+                heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+                heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.top = '100vh';
+                heart.style.opacity = '0.8';
+                heart.style.zIndex = '9999';
+                heart.style.animation = `floatUp ${Math.random() * 3 + 2}s linear forwards`;
+                document.body.appendChild(heart);
+                
+                // 移除心形元素
+                setTimeout(() => {
+                    heart.remove();
+                }, 5000);
+            }
+            
+            // 添加CSS动画
+            const style = document.createElement('style');
+            style.innerHTML = `
+                @keyframes floatUp {
+                    0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
+                    100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+    </script>
+</body>
+</html>
